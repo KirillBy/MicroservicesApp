@@ -41,14 +41,20 @@ namespace Catalog.API.Repositories
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<Product>> GetProductByCategory(string category)
+        public async Task<IEnumerable<Product>> GetProductByCategory(string categoryName)
+
         {
-            FilterDefinition<Product> filter = Builders<Product>.Filter.ElemMatch(p => p.Category, category);
-            
+
+            FilterDefinition<Product> filter = Builders<Product>.Filter.Where(p => p.Category.Contains(categoryName));
+
             return await _context
+
                 .Products
+
                 .Find(filter)
+
                 .ToListAsync();
+
         }
 
 
